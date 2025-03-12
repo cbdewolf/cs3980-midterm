@@ -59,11 +59,13 @@ function refreshPayments() {
         .sort((a, b) => new Date(a.due_date) - new Date(b.due_date))
         .forEach((x) => {
             return (payments.innerHTML += `
-                <div id="payment-${x.payment_id}">
+                <div class="payment-card" id="payment-${x.payment_id}">
                     <h4 class="fw-bold">${x.title}</h4>
                     <p class="text-secondary">${x.desc}</p>
-                    <p><strong>Amount:</strong> $${x.total}</p>
-                    <p><strong>Due Date:</strong> ${x.due_date}</p>
+                    <div class="amount-due">
+                        <p><strong>Amount:</strong> $${x.total}</p>
+                        <p><strong>Due Date:</strong> ${x.due_date}</p>
+                    </div>
                     <span class="options">
                         <i onClick="tryEditPayment(${x.payment_id})" data-bs-toggle="modal" data-bs-target="#modal-edit" class="fas fa-edit"></i>
                         <i onClick="deletePayment(${x.payment_id})" class="fas fa-trash-alt"></i>
@@ -127,7 +129,7 @@ function deletePayment(payment_id) {
     if (!confirm("Are you sure you want to delete this payment?")) {
         return
     }
-    const xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest()
     xhr.onreadystatechange = () => {
       if (xhr.readyState == 4 && xhr.status == 200) {
         data = data.filter((x) => x.payment_id !== payment_id);
@@ -137,6 +139,26 @@ function deletePayment(payment_id) {
     xhr.open('DELETE', `${url}/${payment_id}`, true);
     xhr.send();
 } 
+
+function clearAll() {
+    if (!confirm("Are you sure you want to delete all payments?")) {
+        return
+        }
+    data.forEach(payment => {
+        const xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              console.log("cleared all payments")
+                getPayments()
+            } else if (xhr.readyState == 4) {
+            console.error("failed to clear all payments", xhr.responseText)
+            }    
+        }
+        xhr.open('DELETE', `${url}/${payment.payment_id}`, true)
+        xhr.send()
+    })
+}
+
 
 function getPayments() {
     const xhr = new XMLHttpRequest();

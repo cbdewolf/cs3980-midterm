@@ -1,41 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
 html,
 body {
   height: 100%;
   width: 100%;
   margin: 0;
   overflow: auto;
-  font-family: sans-serif;
-  background-color: #e5e5e5;
+  font-family: "Poppins", sans-serif;
+  background-color: #ececfa;
 }
-
 
 .app {
-  height: 100%;
-  width: 1000px;
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  border: 0.25rem solid #abcea1;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  overflow-y: auto;
-}
-
-#addNew {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(171, 206, 161, 0.35);
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
+    height: auto; 
+    min-height: 90vh; 
+    width: 70rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #fafafa;
+    border: 0.15rem solid #dbdbdb;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    overflow-y: auto;
 }
 
 .fa-plus {
-  background-color: #abcea1;
-  padding: 3px;
-  border-radius: 3px;
+    background-color: transparent !important;
+    padding: 0;
+    border-radius: 0;
 }
+
+#actions {
+    display: flex;  
+    width: 100%;  
+    gap: 10px;
+    flex-shrink: 0;  
+}
+  
+#addNew, #clearAll {
+    flex: 1;  
+    width: 40%;  
+    padding: 12px;
+    border-radius: .75rem;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 2px solid;
+    transition: all 0.3s ease-in-out;
+}
+  
+#addNew {
+    color: rgb(0, 114, 47);
+    background-color: rgba(126, 247, 93, 0.35);
+    border-color:rgb(0, 153, 20);
+}
+
+#addNew:hover {
+    color: white;
+    background-color: rgb(0, 153, 20);
+}
+  
+#clearAll {
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 0, 43);
+    border-color: rgb(255, 0, 43);
+}
+  
+#clearAll:hover {
+    color: rgba(255, 0, 43, 0.7);
+    background-color: rgb(243, 243, 243);
+}
+  
+
 
 #payments {
   display: flex;
@@ -49,15 +88,35 @@ body {
   border: 3px solid #abcea1;
   background-color: #e2eede;
   border-radius: 6px;
-  padding: 5px;
+  padding: 7px;
   display: grid;
-  gap: 4px;
+  gap: 3px;
+}
+
+
+.payment-card {
+    background-color: #e2eede;
+    border-radius: 6px;
+    padding: 10px; 
+    display: flex; 
+    flex-direction: column;
+    gap: 10px;
+}
+
+.amount-due {
+    border: none !important;
+    margin-top: 12px; 
+    padding-top: 8px; 
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
 }
 
 #payments div .options {
   justify-self: center;
   display: flex;
-  gap: 20px;
+  gap: 15px;
 }
 
 #payments div .options i {
