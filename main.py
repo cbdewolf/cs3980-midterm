@@ -6,7 +6,12 @@ from payment_routes import payment_router
 
 app = FastAPI(title="pmp-app")
 app.include_router(payment_router, tags=["Payments"], prefix="/payments")
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
