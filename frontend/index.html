@@ -14,21 +14,28 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image" href="favicon.ico" />
     <title>Payment Tracker</title>
   </head>
 
   <body class="py-4">
     <div class="app mx-auto">
       <h1 class="mb-3">Pay Me Please!</h1>
-      <button
-        id="addNew"
-        onclick="tryAdd()"
-        data-bs-toggle="modal"
-        data-bs-target="#modal-add"
-      >
-        <span>Add New Payment</span>
-        <i class="fas fa-plus"></i>
-      </button>
+      <div id="actions">
+        <button
+          id="addNew"
+          onclick="tryAdd()"
+          data-bs-toggle="modal"
+          data-bs-target="#modal-add"
+        >
+          <span>Add New Payment</span>
+          <i class="fas fa-plus"></i>
+        </button>
+        <button id="clearAll" onclick="clearAll()">
+          <span> Clear All Payments </span>
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
       <h2 class="text-center my-3">Payments</h2>
       <div id="payments" class="container mt-3"></div>
     </div>
