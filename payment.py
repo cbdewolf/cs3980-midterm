@@ -7,6 +7,7 @@ class Payment(BaseModel):
     desc: str
     total: float | int
     due_date: str = None
+    paid: bool
 
 
 class PaymentRequest(BaseModel):
@@ -14,3 +15,4 @@ class PaymentRequest(BaseModel):
     desc: str
     total: float | int
     due_date: str
+    paid: bool

@@ -27,7 +27,8 @@ document.getElementById('form-add').addEventListener('submit', (e) => {
             title: titleInput.value,
             total: parseFloat(totalInput.value),
             desc: descInput.value,
-            due_date: dueDateInput.value
+            due_date: dueDateInput.value,
+            paid: false
         })
     }
 })
@@ -55,24 +56,37 @@ function addPayment(payment) {
 function refreshPayments() {
     const payments = document.getElementById('payments')
     payments.innerHTML = ''
+    const today = new Date().toISOString().split('T')[0];
+    let totalDue = 0
     data
         .sort((a, b) => new Date(a.due_date) - new Date(b.due_date))
         .forEach((x) => {
+
+            if (!x.paid) {
+                totalDue += x.total
+            }
+            let isOverDue = new Date(x.due_date) < new Date(today)
+            let overDueLabel = isOverDue ? `<span class="overdue-label">OVERDUE</span>` : ''
+
+            let isPaid = x.paid ? "Paid" : "Not Paid"
+            let paidClass = x.paid ? "paid-button-paid" : "paid-button-unpaid"
             return (payments.innerHTML += `
                 <div class="payment-card" id="payment-${x.payment_id}">
                     <h4 class="fw-bold">${x.title}</h4>
                     <p class="text-secondary">${x.desc}</p>
                     <div class="amount-due">
                         <p><strong>Amount:</strong> $${x.total}</p>
-                        <p><strong>Due Date:</strong> ${x.due_date}</p>
+                        <p><strong>Due Date:</strong> ${x.due_date} ${overDueLabel}</p>
                     </div>
                     <span class="options">
                         <i onClick="tryEditPayment(${x.payment_id})" data-bs-toggle="modal" data-bs-target="#modal-edit" class="fas fa-edit"></i>
                         <i onClick="deletePayment(${x.payment_id})" class="fas fa-trash-alt"></i>
+                        <button class="${paidClass}" onClick="togglePaid(${x.payment_id}, ${x.paid})">${isPaid}</button>
                     </span>
                 </div>                    
             `)
         })
+    document.getElementById("total-due").innerText = `Total Due: $${totalDue.toFixed(2)}`
     resetForm()
 }
 
@@ -101,10 +115,10 @@ document.getElementById('form-edit').addEventListener('submit', (e) => {
         document.getElementById('msg-edit').innerHTML = 'Payment Title cannot be blank!'
         return
     } else {
-        selectedPayment.title = titleEditInput.value;
-        selectedPayment.desc = descEditInput.value;
-        selectedPayment.total = parseFloat(totalEditInput.value);
-        selectedPayment.due_date = dueDateEditInput.value;
+        selectedPayment.title = titleEditInput.value
+        selectedPayment.desc = descEditInput.value.trim() || ""
+        selectedPayment.total = parseFloat(totalEditInput.value)
+        selectedPayment.due_date = dueDateEditInput.value
         editPayment(selectedPayment)
     }
 })
@@ -157,6 +171,24 @@ function clearAll() {
         xhr.open('DELETE', `${url}/${payment.payment_id}`, true)
         xhr.send()
     })
+}
+
+function togglePaid(payment_id, status) {
+    const updatedPayment = data.find((x) => x.payment_id === payment_id)
+    if (!updatedPayment) {
+        return
+    }
+    updatedPayment.paid = !status
+
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            getPayments();
+        }
+    };
+    xhr.open('PUT', `${url}/${payment_id}`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    xhr.send(JSON.stringify(updatedPayment));
 }
 
 
