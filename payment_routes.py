@@ -36,6 +36,7 @@ async def add_payment(payment: PaymentRequest) -> Payment:
         total=payment.total,
         desc=payment.desc,
         due_date=payment.due_date,
+        paid=payment.paid,
     )
     payment_list.append(new_payment)
     return new_payment
@@ -50,7 +51,8 @@ async def update_payment(input_payment: PaymentRequest, payment_id: int) -> dict
             payment.desc = input_payment.desc
             payment.total = input_payment.total
             payment.due_date = input_payment.due_date
-            return {"message": "Todo updated successfully"}
+            payment.paid = input_payment.paid
+            return {"message": "Payment updated successfully"}
 
     return {"message": f"The payment with ID={payment_id} is not found."}
 
@@ -63,7 +65,8 @@ async def remove_payment(payment_id: int) -> dict:
         payment = payment_list[i]
         if payment.payment_id == payment_id:
             payment_list.pop(i)
-            return {"msg": f"the todo with ID={payment_id} is removed"}
+            return {"msg": f"the payment with ID={payment_id} is removed"}
     raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND, detail=f"payment with id {id} not found"
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail=f"payment with id {payment_id} not found",
     )

@@ -17,7 +17,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: #fafafa;
-    border: 0.15rem solid #dbdbdb;
+    border: 0.10rem solid #dbdbdb;
     border-radius: 0.75rem;
     padding: 1rem;
     overflow-y: auto;
@@ -126,3 +126,47 @@ body {
 #msg {
   color: red;
 } 
+
+.overdue-label {
+  color: white;
+  background-color: red;
+  padding: 3px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+.payment-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.payment-actions .paid-button {
+  margin-left: auto;
+  min-width: 100px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.paid-button-paid {
+  background-color: #44ca48;
+  color: white;
+  border: 2px solid #3d8b40;
+  border-radius: .75rem;
+}
+
+.paid-button-unpaid {
+  color: white;
+  border: 2px solid red;
+  background-color: red;
+  border-radius: .75rem;
+}
+
+.paid-button:hover {
+  opacity: 0.8;
+}
