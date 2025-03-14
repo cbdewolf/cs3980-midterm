@@ -60,7 +60,7 @@ Once the modal is filled out, the payment will be added to the UI.
 ![image](https://github.com/user-attachments/assets/41adb7d1-1565-4433-94c8-cd30b198bbee)
 
 ### Read
-With the added payment, you can see the UI rendering the new data that has been added to the UI. Therefor, the READ is satisfied! 
+After a payment is added, a GET request is made to the API so it can display the updated payments, which satisfies the READ requirement. In fact, anytime a payment is added, deleted, or updated, a GET request is made to ensure the proper data is being displayed. 
 
 ### Update
 Any payment can be updated when you click the ![image](https://github.com/user-attachments/assets/d3db41de-ff65-4cec-9c03-50cb239d50c6) icon at the bottom of the payment.
@@ -70,6 +70,16 @@ In this example, I changed the due date. Notice the OVERDUE text next to the due
 
 ### Delete
 To delete a payment, ![image](https://github.com/user-attachments/assets/6c5eaf95-9ca2-4ab7-9ee2-968173494f46) icon at the bottom of the payment. The user will be prompted to confirm the deletion, and once confirmed, the payment will be removed from the list. 
+
+## Code
+
+### Frontend
+
+The frontend of this project was done in vanilla Javascript, HTML, and CSS. All of which is loosely designed off of Professor Xu's sample code, with necessary modifications to the methods and structure to account for the fields of each Payment. As advised in class, Bootstrap was used for the styling, along with some of my own modifications to give the app a cleaner design. I used XHR style API calls as shown in class, as well as a few added methods for clearing all Payments, and toggling the status of the "paid" field in a Payment. 
+
+### Backend
+
+The backend was made in Python, and uses FastAPI. The code is very similar to that of our demo in class, but I added more fields in Payment to account for additional user information that is needed. 
 
 
 
