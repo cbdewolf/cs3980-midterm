@@ -1,7 +1,8 @@
 from pydantic import BaseModel
+from beanie import Document
 
 
-class Payment(BaseModel):
+class Payment(Document):
     payment_id: int
     title: str
     desc: str

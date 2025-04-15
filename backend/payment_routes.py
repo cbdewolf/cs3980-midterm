@@ -1,6 +1,6 @@
 from typing import Annotated
 from fastapi import APIRouter, HTTPException, Path, status
-from payment import Payment, PaymentRequest
+from backend.payment import Payment, PaymentRequest
 
 payment_router = APIRouter()
 
