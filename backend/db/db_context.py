@@ -6,7 +6,7 @@ from models import Payment, User
 
 async def init_db():
     my_config = get_settings()
-    client = AsyncIOMotionClient(my_config.connection_string)
+    client = AsyncIOMotorClient(my_config.connection_string)
     db = client["payment-db"]
     await init_beanie(database=db, document_models=[User, Payment])
 

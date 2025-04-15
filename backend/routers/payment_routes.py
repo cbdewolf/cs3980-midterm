@@ -10,15 +10,15 @@ payment_list = []
 
 @payment_router.get("")
 async def get_payments() -> list[Payment]:
-    return payment_list
+    return await Payment.find_all().to_list()
 
 
 # get method
 @payment_router.get("/{payment_id}")
 async def get_payment_by_id(payment_id: Annotated[int, Path(ge=0, lt=1000)]) -> Payment:
-    for payment in payment_list:
-        if payment.payment_id == payment_id:
-            return payment
+    payment = Payment.get(payment_id)
+    if payment:
+        return payment
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
         detail=f"Payment with id {payment_id} not found",
@@ -38,7 +38,7 @@ async def add_payment(payment: PaymentRequest) -> Payment:
         due_date=payment.due_date,
         paid=payment.paid,
     )
-    payment_list.append(new_payment)
+    await Payment.insert_one(new_payment)
     return new_payment
 
 

@@ -3,7 +3,9 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from payment_routes import payment_router
+from routers.payment_routes import payment_router
+from routers.user_routes import user_router
+
 
 
 async def lifespan():
@@ -12,6 +14,7 @@ async def lifespan():
 
 app = FastAPI(title="payment-tracker-app", version="2.0.0", lifespan=lifespan)
 app.include_router(payment_router, tags=["Payments"], prefix="/payments")
+app.include_router(user_router, tags=["Users"], prefix="/users")
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
