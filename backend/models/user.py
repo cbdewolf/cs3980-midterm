@@ -1,4 +1,5 @@
 from beanie import Document
+from pydantic import BaseModel
 
 
 class User(Document):
@@ -8,3 +9,13 @@ class User(Document):
 
     class Settings:
         name = "users"
+
+
+class UserRequest(BaseModel):
+    """
+    model for user signup
+    """
+
+    username: str
+    email: str
+    password: str

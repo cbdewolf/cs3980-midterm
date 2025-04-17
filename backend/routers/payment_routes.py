@@ -1,6 +1,8 @@
 from typing import Annotated
-from fastapi import APIRouter, HTTPException, Path, status
-from backend.payment import Payment, PaymentRequest
+from beanie import PydanticObjectId
+from fastapi import APIRouter, Depends, HTTPException, Path, status
+from backend.models.payment import Payment, PaymentRequest
+from backend.routers.user_routes import TokenData, get_user
 
 payment_router = APIRouter()
 
@@ -14,9 +16,12 @@ async def get_payments() -> list[Payment]:
 
 
 # get method
+# PydanticObjectId
 @payment_router.get("/{payment_id}")
-async def get_payment_by_id(payment_id: Annotated[int, Path(ge=0, lt=1000)]) -> Payment:
-    payment = Payment.get(payment_id)
+async def get_payment_by_id(
+    payment_id: PydanticObjectId, user: Annotated[TokenData, Depends(get_user)]
+) -> Payment:
+    payment = await Payment.get(payment_id)
     if payment:
         return payment
     raise HTTPException(
@@ -45,27 +50,25 @@ async def add_payment(payment: PaymentRequest) -> Payment:
 # put method/update
 @payment_router.put("/{payment_id}")
 async def update_payment(input_payment: PaymentRequest, payment_id: int) -> dict:
-    for payment in payment_list:
-        if payment.payment_id == payment_id:
-            payment.title = input_payment.title
-            payment.desc = input_payment.desc
-            payment.total = input_payment.total
-            payment.due_date = input_payment.due_date
-            payment.paid = input_payment.paid
-            return {"message": "Payment updated successfully"}
-
+    existing_payment = await Payment.get(payment_id)
+    if existing_payment:
+        existing_payment.title = input_payment.title
+        existing_payment.desc = input_payment.desc
+        existing_payment.total = input_payment.total
+        existing_payment.due_date = input_payment.due_date
+        existing_payment.paid = input_payment.paid
+        await existing_payment.save()
+        return {"message": f"The payment with ID={payment_id} is updated."}
     return {"message": f"The payment with ID={payment_id} is not found."}
 
 
 # delete method/delete
 @payment_router.delete("/{payment_id}")
 async def remove_payment(payment_id: int) -> dict:
-    global payment_list
-    for i in range(len(payment_list)):
-        payment = payment_list[i]
-        if payment.payment_id == payment_id:
-            payment_list.pop(i)
-            return {"msg": f"the payment with ID={payment_id} is removed"}
+    payment = await Payment.get(payment_id)
+    await payment.delete()
+    if payment:
+        return {"message": f"The payment with ID={payment_id} is deleted."}
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
         detail=f"payment with id {payment_id} not found",
