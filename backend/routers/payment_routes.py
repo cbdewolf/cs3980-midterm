@@ -49,7 +49,7 @@ async def add_payment(payment: PaymentRequest) -> Payment:
 
 # put method/update
 @payment_router.put("/{payment_id}")
-async def update_payment(input_payment: PaymentRequest, payment_id: int) -> dict:
+async def update_payment(input_payment: PaymentRequest, payment_id: PydanticObjectId) -> dict:
     existing_payment = await Payment.get(payment_id)
     if existing_payment:
         existing_payment.title = input_payment.title
@@ -64,10 +64,10 @@ async def update_payment(input_payment: PaymentRequest, payment_id: int) -> dict
 
 # delete method/delete
 @payment_router.delete("/{payment_id}")
-async def remove_payment(payment_id: int) -> dict:
+async def remove_payment(payment_id: PydanticObjectId) -> dict:
     payment = await Payment.get(payment_id)
-    await payment.delete()
     if payment:
+        await payment.delete()
         return {"message": f"The payment with ID={payment_id} is deleted."}
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,

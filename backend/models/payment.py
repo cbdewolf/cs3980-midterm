@@ -3,7 +3,6 @@ from beanie import Document
 
 
 class Payment(Document):
-    payment_id: int
     title: str
     desc: str
     total: float | int

@@ -61,7 +61,6 @@ function refreshPayments() {
     data
         .sort((a, b) => new Date(a.due_date) - new Date(b.due_date))
         .forEach((x) => {
-
             if (!x.paid) {
                 totalDue += x.total
             }
@@ -71,7 +70,7 @@ function refreshPayments() {
             let isPaid = x.paid ? "Paid" : "Not Paid"
             let paidClass = x.paid ? "paid-button-paid" : "paid-button-unpaid"
             return (payments.innerHTML += `
-                <div class="payment-card" id="payment-${x.payment_id}">
+                <div class="payment-card" id="payment-${x._id}">
                     <h4 class="fw-bold">${x.title}</h4>
                     <p class="text-secondary">${x.desc}</p>
                     <div class="amount-due">
@@ -79,12 +78,12 @@ function refreshPayments() {
                         <p><strong>Due Date:</strong> ${x.due_date} ${overDueLabel}</p>
                     </div>
                     <span class="options">
-                        <i onClick="tryEditPayment(${x.payment_id})" data-bs-toggle="modal" data-bs-target="#modal-edit" class="fas fa-edit"></i>
-                        <i onClick="deletePayment(${x.payment_id})" class="fas fa-trash-alt"></i>
-                        <button class="${paidClass}" onClick="togglePaid(${x.payment_id}, ${x.paid})">${isPaid}</button>
+                        <i onClick="tryEditPayment('${x._id}')" data-bs-toggle="modal" data-bs-target="#modal-edit" class="fas fa-edit"></i>
+                        <i onClick="deletePayment('${x._id}')" class="fas fa-trash-alt"></i>
+                        <button class="${paidClass}" onClick="togglePaid('${x._id}', ${x.paid})">${isPaid}</button>
                     </span>
                 </div>                    
-            `)
+            `);
         })
     document.getElementById("total-due").innerText = `Total Due: $${totalDue.toFixed(2)}`
     resetForm()
@@ -98,10 +97,10 @@ function resetForm() {
 }
 
 function tryEditPayment(payment_id) {
-    const payment = data.find((x) => x.payment_id === payment_id)
+    const payment = data.find((x) => x._id === payment_id)
     selectedPayment = payment
     const paymentID = document.getElementById("payment-id")
-    paymentID.innerText = payment.payment_id
+    paymentID.innerText = payment._id
     titleEditInput.value = payment.title
     descEditInput.value = payment.desc
     totalEditInput.value = payment.total
@@ -133,20 +132,21 @@ function editPayment(payment) {
         closeBtn.click();
       }
     };
-    xhr.open('PUT', `${url}/${payment.payment_id}`, true);
+    xhr.open('PUT', `${url}/${payment._id}`, true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     console.log(payment)
     xhr.send(JSON.stringify(payment));
   };
 
 function deletePayment(payment_id) {
+    console.log("deletePayment called with:", payment_id);
     if (!confirm("Are you sure you want to delete this payment?")) {
         return
     }
     const xhr = new XMLHttpRequest()
     xhr.onreadystatechange = () => {
       if (xhr.readyState == 4 && xhr.status == 200) {
-        data = data.filter((x) => x.payment_id !== payment_id);
+        data = data.filter((x) => x._id !== payment_id);
         getPayments();
       }
     };
@@ -168,13 +168,13 @@ function clearAll() {
             console.error("failed to clear all payments", xhr.responseText)
             }    
         }
-        xhr.open('DELETE', `${url}/${payment.payment_id}`, true)
+        xhr.open('DELETE', `${url}/${payment._id}`, true)
         xhr.send()
     })
 }
 
 function togglePaid(payment_id, status) {
-    const updatedPayment = data.find((x) => x.payment_id === payment_id)
+    const updatedPayment = data.find((x) => x._id === payment_id)
     if (!updatedPayment) {
         return
     }
