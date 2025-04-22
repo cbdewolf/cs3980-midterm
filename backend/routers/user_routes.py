@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
-from backend.models.user import User, UserRequest
+from backend.models.user import User, UserRequest, UserUpdateRequest
 from backend.auth.jwt_auth import (
     Token,
     TokenData,
@@ -21,7 +21,7 @@ class HashPassword:
         return pwd_context.verify(input_password, hashed_password)
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 hash_password = HashPassword()
 
 
@@ -33,7 +33,7 @@ def get_user(token: Annotated[str, Depends(oauth2_scheme)]) -> TokenData:
 user_router = APIRouter()
 
 
-@user_router.post("/signup")
+@user_router.post("/register")
 async def sign_up(user: UserRequest):
     # need to add checkers for character length and special characters and such
     existing_user = await User.find_one(User.username == user.username)
@@ -46,13 +46,12 @@ async def sign_up(user: UserRequest):
     new_user = User(
         username=user.username,
         password=hashed_password,
-        email=user.email,
     )
     await new_user.create()
     return {"message": "User created successfully"}
 
 
-@user_router.post("/sign-in")
+@user_router.post("/login")
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ) -> Token:
@@ -72,3 +71,29 @@ async def login_for_access_token(
         return Token(access_token=access_token)
 
     raise HTTPException(status_code=401, detail="Invalid username or password")
+
+
+@user_router.get("/me")
+async def get_current_user(user: TokenData = Depends(get_user)):
+    existing_user = await User.find_one(User.username == user.username)
+    if not existing_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid username or password",
+        )
+    return existing_user
+
+
+"""@user_router.put("/me")
+async def update_user(
+    update_data: UserUpdateRequest, user: TokenData = Depends(get_user)
+):
+    existing_user = await User.find_one(User.username == user.username)
+    if not existing_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="user not found",
+        )
+    update_dict = update_data.model_dump(exclude_unset=True)
+    await existing_user.set(update_dict)
+    return {"message": "User updated successfully"}"""

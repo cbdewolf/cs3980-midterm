@@ -4,7 +4,6 @@ from pydantic import BaseModel
 
 class User(Document):
     username: str
-    email: str
     password: str
 
     class Settings:
@@ -17,5 +16,8 @@ class UserRequest(BaseModel):
     """
 
     username: str
-    email: str
     password: str
+
+
+class UserUpdateRequest(BaseModel):
+    pass
