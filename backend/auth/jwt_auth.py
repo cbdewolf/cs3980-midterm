@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+from fastapi import HTTPException
 import jwt
 from pydantic import BaseModel
 from backend.models.my_config import get_settings
@@ -35,4 +36,4 @@ def decode_jwt_token(token: str) -> TokenData | None:
         exp: int = payload.get("exp")
         return TokenData(username=username, exp_datetime=datetime.fromtimestamp(exp))
     except jwt.InvalidTokenError:
-        print("Invalid JWT token.")
+        raise HTTPException(status_code=401, detail="Invalid or expired token")

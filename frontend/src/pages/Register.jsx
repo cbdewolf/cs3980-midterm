@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import '../styles/register.css'
-//import NavBar from '../components/NavBar'
+import NavBar from '../components/NavBar'
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -36,7 +36,7 @@ const Register = () => {
         }
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/auth/register', {
+            const response = await fetch('http://127.0.0.1:8000/api/users/register', {
                 method:'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({username, password})
@@ -48,7 +48,7 @@ const Register = () => {
                 throw new Error(data.detail || 'Registration failed')
             }
             localStorage.setItem("token", data.access_token)
-            navigate("/dashboard")
+            navigate("/payments")
         } catch(error) {
             setError(error.message)
         } finally {
@@ -58,7 +58,7 @@ const Register = () => {
 
     return (
         <>
-            {/*<NavBar />*/}
+            <NavBar />
             <div className="register-container">
                 <div className="register-box">
                 <h2 className="register-title">Register</h2>
@@ -104,7 +104,7 @@ const Register = () => {
                         />
                     </div>
                     {error && <p className="error-message">{error}</p>}
-                    <button type="submit" className="login-button" disabled={loading}>
+                    <button type="submit" className="register-button" disabled={loading}>
                         {loading ? 'Registering...' : 'Register'}
                     </button>
                 </form>

@@ -26,7 +26,6 @@ hash_password = HashPassword()
 
 
 def get_user(token: Annotated[str, Depends(oauth2_scheme)]) -> TokenData:
-    print(token)
     return decode_jwt_token(token)
 
 

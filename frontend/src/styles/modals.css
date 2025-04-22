@@ -1,0 +1,14 @@
+.modal.show {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-content {
+    border-radius: 0.75rem;
+    padding: 1rem;
+  }
+  
+  .text-danger {
+    color: red;
+  }
+  

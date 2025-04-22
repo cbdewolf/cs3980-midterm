@@ -1,0 +1,83 @@
+.payment-card {
+    background-color: #e2eede;
+    border-radius: 6px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .amount-due {
+    margin-top: 12px;
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+  }
+  
+  .options {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .options i {
+    cursor: pointer;
+  }
+  
+  .overdue-label {
+    color: white;
+    background-color: red;
+    padding: 3px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+    margin-left: 10px;
+  }
+  
+  .paid-button {
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 1rem;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  
+  
+  .paid-button-paid {
+    background-color: #44ca48;
+    color: white;
+    border: 2px solid #3d8b40;
+    border-radius: .75rem;
+  }
+  
+  .paid-button-unpaid {
+    color: white;
+    border: 2px solid red;
+    background-color: red;
+    border-radius: .75rem;
+  }
+  
+  .paid-button:hover {
+    opacity: 0.8;
+  }
+
+  .payment-actions {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 1rem; 
+    margin-top: 1rem;
+  }
+  
+  .payment-actions i {
+    font-size: 1.1rem;
+    cursor: pointer;            
+    transition: color 0.2s ease;
+  }
+  
+  .payment-actions i:hover {
+    color: #333; 
+  }
+  
