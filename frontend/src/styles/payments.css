@@ -5,10 +5,6 @@
     padding-bottom: 2rem;
 }
 
-.app-mx-auto {
-    background-color: #f4f6f8;
-}
-
 .actions-bar {
     display: flex;
     justify-content: space-between;

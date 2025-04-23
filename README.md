@@ -114,7 +114,7 @@ The login and registration is pretty self explanatory. If you are a new user, cr
 
 ### Frontend
 
-The frotned of this project was built with React. The payment page itself is loosely based off of Proffesor Xu's todo app, with some modifications to tge methods and structure for each payment. Some of the styling was used from Bootstrap, and some of it vanilla. In the midterm, I used XHR api calls, but I switched to fetch because I feel I have a better understanding for it now.
+The frotend of this project was built with React. The payment page itself is loosely based off of Proffesor Xu's todo app, with some modifications to tge methods and structure for each payment. Some of the styling was used from Bootstrap, and some of it vanilla. In the midterm, I used XHR api calls, but I switched to fetch because I feel I have a better understanding for it now.
 
 ### Backend
 
