@@ -145,6 +145,7 @@ const Payments = () => {
                     <h1 className="mb-3">Payment Tracker</h1>
                     <span className="total-due">Total Due: ${totalDue.toFixed(2)}</span>
                 </div>
+                { user ? (
                 <div className="actions-bar">
                     <button className="btn-add" onClick={() => setShowAddModal(true)}>
                         Add New Payment 
@@ -153,6 +154,7 @@ const Payments = () => {
                         Clear All Payments
                     </button>
                 </div>
+                ) : (null)}
                 <h2 className="text-center my-3">Payments</h2>
                 <div id="payments" className="container mt-3">
                     {loading ? (
