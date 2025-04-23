@@ -3,7 +3,6 @@ import '../styles/nav-bar.css';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 
-// the user will evnetually fetched from backend to get the user who is logged in
 export default function NavBar() {
 
     const { user, logout } = useContext(UserContext);
@@ -16,11 +15,11 @@ export default function NavBar() {
             <div className="nav-right">
                 {user ? (
                     <>
-                        <button onClick={logout} className="logout">Logout</button>
+                        <Link to="/login" onClick={logout} className="logout">Logout</Link>
                         <p className="username">{user.username}</p>
                     </>
                 ) : (
-                    <Link to="/register" className="username">Guest</Link>
+                    <Link to="/register" className="login-register">Login/Register</Link>
                 )}
             </div>
         </nav>

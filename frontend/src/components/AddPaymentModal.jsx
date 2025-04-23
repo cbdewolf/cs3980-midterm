@@ -11,21 +11,20 @@ const AddPaymentModal = ({ onAdd, onClose }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!title.trim()) {
-        setError("Payment Title cannot be blank!");
+            setError("Payment Title cannot be blank!");
         return;
         }
 
         const newPayment = {
-        title,
-        desc,
-        total: parseFloat(total),
-        due_date: dueDate,
-        paid: false,
+            title,
+            desc,
+            total: parseFloat(total),
+            due_date: dueDate,
+            paid: false,
         };
 
         await onAdd(newPayment);
 
-        // Clear + close
         setTitle("");
         setDesc("");
         setTotal("");
@@ -51,6 +50,7 @@ const AddPaymentModal = ({ onAdd, onClose }) => {
                     className="form-control"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    required
                 />
                 {error && <div className="text-danger mt-1">{error}</div>}
 
@@ -70,6 +70,7 @@ const AddPaymentModal = ({ onAdd, onClose }) => {
                     step="0.01"
                     value={total}
                     onChange={(e) => setTotal(e.target.value)}
+                    required
                 />
 
                 <label className="mt-3">Due Date</label>
@@ -78,6 +79,7 @@ const AddPaymentModal = ({ onAdd, onClose }) => {
                     className="form-control"
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
+                    required
                 />
 
                 <div className="mt-4 d-flex justify-content-end gap-2">

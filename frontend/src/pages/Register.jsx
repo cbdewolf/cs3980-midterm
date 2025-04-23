@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import '../styles/register.css'
 import NavBar from '../components/NavBar'
 import { useNavigate } from "react-router-dom";
+import { UserContext } from '../contexts/UserContext'
 
 const Register = () => {
     const [username, setUsername] = useState('')
@@ -11,6 +12,7 @@ const Register = () => {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const { setToken, setUser } = useContext(UserContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -48,6 +50,8 @@ const Register = () => {
                 throw new Error(data.detail || 'Registration failed')
             }
             localStorage.setItem("token", data.access_token)
+            setToken(data.access_token)
+            setUser(data.user)
             navigate("/payments")
         } catch(error) {
             setError(error.message)
@@ -107,6 +111,9 @@ const Register = () => {
                     <button type="submit" className="register-button" disabled={loading}>
                         {loading ? 'Registering...' : 'Register'}
                     </button>
+                    <p className="login-direct">
+                        Already have an account? <a className="login-href" href="/login">Login</a>
+                    </p>
                 </form>
                 </div>
             </div>

@@ -7,7 +7,7 @@ import "../styles/payments.css";
 import { UserContext } from "../contexts/UserContext";
 
 const Payments = () => {
-    const { token } = useContext(UserContext);
+    const { token, user } = useContext(UserContext);
     const [payments, setPayments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [totalDue, setTotalDue] = useState(0);
@@ -33,32 +33,43 @@ const Payments = () => {
     
         setPayments(data);
         } catch (err) {
-        console.error("Error fetching payments:", err);
-        setPayments([]); 
+            console.error("Error fetching payments:", err);
+            setPayments([]); 
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
       };
       
 
     useEffect(() => {
-        getPayments();
-    }, []);
+        if (user) {
+            getPayments();
+        } else {
+            setPayments([]);
+            setLoading(false); 
+        }
+    }, [user]);
 
     useEffect(() => {
         const total = payments
-        .filter((p) => !p.paid)
-        .reduce((sum, p) => sum + p.total, 0);
+            .filter((p) => !p.paid)
+            .reduce((sum, p) => sum + p.total, 0);
         setTotalDue(total);
     }, [payments]);
 
     const handleAddPayment = async (payment) => {
-        await fetch("http://127.0.0.1:8000/api/payments", {
+        const res = await fetch("http://127.0.0.1:8000/api/payments", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
             body: JSON.stringify(payment),
-            Authorization: `Bearer ${token}`,
         });
+        if (!res.ok) {
+            const error = await res.json().catch(() => ({}));
+            console.error("Failed to add payment", res.status, error);
+        }
         getPayments();
     };
 
@@ -75,15 +86,23 @@ const Payments = () => {
     const handleClearAll = async () => {
         const confirm = window.confirm("Are you sure you want to delete all payments?");
         if (!confirm) return;
-
         try {
-            await fetch("http://127.0.0.1:8000/api/payments", {
-            method: "DELETE",
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
+            const res = await fetch("http://127.0.0.1:8000/api/payments", {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
             });
+            
+            if (!res.ok) {
+                const error = await res.json().catch(() => ({}));
+                console.error("Failed to clear all payments", res.status, error);
+                return;
+            } else {
+                console.log("cleared payments successfully");
+            }
+
             getPayments();
         } catch (err) {
             console.error("Failed to clear all payments:", err);
@@ -137,7 +156,9 @@ const Payments = () => {
                 <h2 className="text-center my-3">Payments</h2>
                 <div id="payments" className="container mt-3">
                     {loading ? (
-                    <p>Loading...</p>
+                        <p>Loading...</p>
+                    ) : !user ? (
+                        <p>Please Login.</p>
                     ) : Array.isArray(payments) && payments.length > 0 ? (
                         payments
                             .sort((a, b) => new Date(a.due_date) - new Date(b.due_date))
@@ -146,15 +167,15 @@ const Payments = () => {
                                 key={payment._id}
                                 payment={payment}
                                 onEdit={(payment) => {
-                                setSelectedPayment(payment);
-                                setShowEditModal(true);
+                                    setSelectedPayment(payment);
+                                    setShowEditModal(true);
                                 }}
                                 onDelete={handleDeletePayment}
                                 onTogglePaid={handleTogglePaid}
                             />
                         ))
                     ) : (
-                        <p>No payments found or you are not authorized.</p>
+                        <p>No payments found. Please add a payment.</p>
                     )}
                 </div>
                 {showAddModal && (

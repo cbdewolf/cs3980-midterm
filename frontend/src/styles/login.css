@@ -4,9 +4,9 @@
     justify-content: center;
     min-height: 100vh;
     background-color: #f4f6f8;
-    padding: 2rem;
     box-sizing: border-box;
     width: 100%;
+    margin-top: -4rem;
   }
   
   .login-box {
@@ -28,7 +28,7 @@
   }
   
   .login-form .form-group {
-    width: 95%;
+    width: 100%;
     margin-bottom: 1.5rem;
   }
   
@@ -49,14 +49,14 @@
   }
   
   .login-form input:focus {
-    border-color: #007bff;
+    border-color: #0dc435;
     outline: none;
   }
   
   .login-button {
     width: 100%;
     padding: 0.9rem;
-    background-color: #007bff;
+    background-color: #0dc435;
     color: white;
     border: none;
     font-weight: bold;
@@ -67,11 +67,20 @@
   }
   
   .login-button:hover {
-    background-color: #0056b3;
+    background-color: #07681c;
   }
   
   .login-form .error-message {
     color: red;
     font-size: 0.9rem;
     margin-top: 0.5rem;
+  }
+
+  .register-direct {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  
+  .register-href {
+    color:#15b129
   }

@@ -17,8 +17,6 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="payment-tracker-app", version="2.0.0", lifespan=lifespan)
-app.include_router(payment_router, tags=["payments"], prefix="/api/payments")
-app.include_router(user_router, tags=["auth"], prefix="/api/users")
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
@@ -27,6 +25,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.include_router(payment_router, tags=["payments"], prefix="/api/payments")
+app.include_router(user_router, tags=["auth"], prefix="/api/users")
 
 
 @app.get("/")

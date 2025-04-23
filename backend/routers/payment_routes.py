@@ -14,7 +14,7 @@ payment_list = []
 async def get_payments(
     current_user: TokenData = Depends(get_current_user),
 ) -> list[Payment]:
-    return await Payment.find(Payment.user_created == current_user.username).to_list()
+    return await Payment.find(Payment.created_by == current_user.username).to_list()
 
 
 # get method
@@ -80,7 +80,7 @@ async def remove_payment(payment_id: PydanticObjectId) -> dict:
     )
 
 
-@payment_router.delete("/payments")
+@payment_router.delete("")
 async def clear_all_payments(current_user: TokenData = Depends(get_current_user)):
     result = await Payment.find(Payment.created_by == current_user.username).delete()
-    return {"deleted_count": result}
+    return {"deleted_count": str(result)}

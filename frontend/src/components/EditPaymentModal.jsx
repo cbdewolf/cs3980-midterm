@@ -53,6 +53,7 @@ const EditPaymentModal = ({ payment, onUpdate, onClose }) => {
                     className="form-control"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    required
                 />
                 {error && <div className="text-danger mt-1">{error}</div>}
 
@@ -72,6 +73,7 @@ const EditPaymentModal = ({ payment, onUpdate, onClose }) => {
                     step="0.01"
                     value={total}
                     onChange={(e) => setTotal(e.target.value)}
+                    required
                 />
 
                 <label className="mt-3">Due Date</label>
@@ -80,6 +82,7 @@ const EditPaymentModal = ({ payment, onUpdate, onClose }) => {
                     className="form-control"
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
+                    required
                 />
 
                 <div className="mt-4 d-flex justify-content-end gap-2">

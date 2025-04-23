@@ -1,7 +1,9 @@
-import React from "react"
+import React, { useContext } from "react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import '../styles/login.css'
+import NavBar from "../components/NavBar"
+import { UserContext } from "../contexts/UserContext"
 
 const Login = () => {
 
@@ -10,6 +12,7 @@ const Login = () => {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const { setToken, setUser } = useContext(UserContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -37,6 +40,8 @@ const Login = () => {
                 throw new Error(data.detail || 'Login failed')
             }
             localStorage.setItem("token", data.access_token)
+            setToken(data.access_token)
+            setUser(data.user)
             navigate("/payments")
             
         } catch(error) {
@@ -48,7 +53,7 @@ const Login = () => {
 
     return (
         <>
-            {/*<NavBar />*/}
+            <NavBar />
             <div className="login-container">
                 <div className="login-box">
                 <h2 className="login-title">Login</h2>
@@ -77,6 +82,9 @@ const Login = () => {
                     <button type="submit" className="login-button" disabled={loading}>
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
+                    <p className="register-direct">
+                        New? Click <a className="register-href" href="/register">here</a> to register
+                    </p>
                 </form>
                 </div>
             </div>

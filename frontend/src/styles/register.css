@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    height: calc(100vh - 64px);
     background-color: #f4f6f8;
     padding: 2rem;
     box-sizing: border-box;
@@ -56,7 +56,7 @@
   
   /* Focused input styling */
   .register-form input:focus {
-    border-color: #15b129;
+    border-color: #0dc435;
     outline: none;
   }
   
@@ -64,7 +64,7 @@
   .register-button {
     width: 100%;
     padding: 0.9rem;
-    background-color: #28c41a;
+    background-color: #0dc435;
     color: white;
     border: none;
     font-weight: bold;
@@ -74,14 +74,21 @@
     transition: background-color 0.2s ease;
   }
   
-  /* Button hover */
   .register-button:hover {
-    background-color: #59bb17;
+    background-color: #07681c;
   }
-  
-  /* Error message styling */
+
   .register-form .error-message {
     color: red;
     font-size: 0.9rem;
     margin-top: 0.5rem;
   }
+
+.login-direct {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.login-href {
+  color:#15b129
+}
