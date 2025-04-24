@@ -51,10 +51,12 @@ const Payments = () => {
     }, [user]);
 
     useEffect(() => {
-        const total = payments
-            .filter((p) => !p.paid)
-            .reduce((sum, p) => sum + p.total, 0);
-        setTotalDue(total);
+        if (user) {
+            const total = payments
+                .filter((p) => !p.paid)
+                .reduce((sum, p) => sum + p.total, 0);
+            setTotalDue(total);
+        }
     }, [payments]);
 
     const handleAddPayment = async (payment) => {
