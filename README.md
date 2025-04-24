@@ -64,7 +64,7 @@ For the backend, execute this from the **Project Root**:
 It is **ESSENTIAL** that it is run in the root, and that it is backend.main:app, instead of main:app, otherwise my FastAPI server will not start due to the imports in the backend.
 
 The terminal will then launch the app, and prompt you with this text:
-![alt text](image.png)
+![alt text](images/image.png)
 Hold down control (command on MacOS), and click on **http://127.0.0.1:8000**, this will open up the app in your preferred browser. It will open a blank screen, this is totally normal, I would suggest just going to http://127.0.0.1:8000/docs to the Swagger documentation, but its entirely up to you.
 
 For the frontend, go into the git bash (or zsh) terminal from before.
@@ -77,7 +77,7 @@ npm run dev
 ```
 
 The terminal will launch the frontend, and prompt you with this text:
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 Once again, hold down control (command on MacOS), and click **http://localhost:5173/**. This will open up the frontend of the application, and you are ready to demo!
 
 ## How To Use The App

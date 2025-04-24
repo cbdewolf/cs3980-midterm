@@ -85,18 +85,3 @@ async def get_current_user(user: TokenData = Depends(get_user)):
             detail="Invalid username or password",
         )
     return existing_user
-
-
-"""@user_router.put("/me")
-async def update_user(
-    update_data: UserUpdateRequest, user: TokenData = Depends(get_user)
-):
-    existing_user = await User.find_one(User.username == user.username)
-    if not existing_user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="user not found",
-        )
-    update_dict = update_data.model_dump(exclude_unset=True)
-    await existing_user.set(update_dict)
-    return {"message": "User updated successfully"}"""

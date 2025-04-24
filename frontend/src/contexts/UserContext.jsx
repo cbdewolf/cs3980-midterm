@@ -12,7 +12,6 @@ export const UserProvider = ({ children }) => {
     setToken(null);
     localStorage.removeItem('token');
   };
-  
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -20,7 +19,7 @@ export const UserProvider = ({ children }) => {
       if (!token) {
         setUser(null);
         setLoading(false);
-        return
+        return;
       }
 
       try {
@@ -31,15 +30,15 @@ export const UserProvider = ({ children }) => {
         });
 
         if (res.status === 401) {
-          console.warn("User fetch failed with status: 401");
-          localStorage.removeItem("token");
+          console.warn('User fetch failed with status: 401');
+          localStorage.removeItem('token');
           setUser(null);
           setLoading(false);
           return;
         }
 
         if (!res.ok) {
-          console.warn("User fetch failed with status:", res.status);
+          console.warn('User fetch failed with status:', res.status);
           setLoading(false);
           return;
         }
@@ -56,7 +55,9 @@ export const UserProvider = ({ children }) => {
   }, [token]);
 
   return (
-    <UserContext.Provider value={{ user, token, setUser, setToken, logout, loading }}>
+    <UserContext.Provider
+      value={{ user, token, setUser, setToken, logout, loading }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -1,87 +1,84 @@
 .register-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: calc(100vh - 64px);
-    background-color: #f4f6f8;
-    padding: 2rem;
-    box-sizing: border-box;
-    width: 100%;
-  }
-  
-  /* Register box styling */
-  .register-box {
-    background-color: white;
-    padding: 3rem 2.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-  }
-  
-  /* Title */
-  .register-title {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 2rem;
-    font-weight: 600;
-    color: #333;
-  }
-  
-  /* Form group (label + input block) */
-  .register-form .form-group {
-    width: 100%;
-    margin-bottom: 1.5rem;
-  }
-  
-  /* Labels */
-  .register-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: #555;
-  }
-  
-  /* Input fields */
-  .register-form input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: border-color 0.2s;
-    box-sizing: border-box;
-  }
-  
-  /* Focused input styling */
-  .register-form input:focus {
-    border-color: #0dc435;
-    outline: none;
-  }
-  
-  /* Submit button */
-  .register-button {
-    width: 100%;
-    padding: 0.9rem;
-    background-color: #0dc435;
-    color: white;
-    border: none;
-    font-weight: bold;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .register-button:hover {
-    background-color: #07681c;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 64px);
+  background-color: #f4f6f8;
+  padding: 2rem;
+  box-sizing: border-box;
+  width: 100%;
+}
 
-  .register-form .error-message {
-    color: red;
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-  }
+.register-box {
+  background-color: white;
+  padding: 3rem 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+
+.register-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+
+.register-form .form-group {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+
+.register-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+
+.register-form input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.register-form input:focus {
+  border-color: #0dc435;
+  outline: none;
+}
+
+.register-button {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #0dc435;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.register-button:hover {
+  background-color: #07681c;
+}
+
+.register-form .error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
 
 .login-direct {
   text-align: center;
@@ -89,13 +86,13 @@
 }
 
 .login-href {
-  color:#15b129
+  color: #15b129;
 }
 
-input[type="text"],
-input[type="password"] {
+input[type='text'],
+input[type='password'] {
   background-color: white !important;
   color: #000 !important;
-  -webkit-text-fill-color: #000 !important; 
-  transition: background-color 5000s ease-in-out 0s; 
+  -webkit-text-fill-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
 }

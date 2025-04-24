@@ -6,9 +6,6 @@ from backend.routers.user_routes import TokenData, get_current_user, get_user
 
 payment_router = APIRouter()
 
-max_id: int = 0
-payment_list = []
-
 
 @payment_router.get("")
 async def get_payments(
