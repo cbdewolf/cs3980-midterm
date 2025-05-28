@@ -1,15 +1,10 @@
-# cs3980-midterm
+# cs3980-hw4
 
 ## Overview
 
-This is my Midterm Project for CS:3980, Web Application Development With Python, Spring 2025. We were tasked with creating a simple TODO-like web application, with the main goals being
+For HW4, we were tasked to intergrate our midterm projects with MongoDB, so that our app uses a real database to persist data, rather than an in-memory list. In doing so, we were also asked to implement a User Login feature.
 
-- Able to create a virtual environment for Python projects
-- Able to set up FastAPI projects
-- Able to create CRUD API endpoints
-- Able to connect front end with back end using HTTP calls
-
-My project is a Payment Tracker App, which looked to bring organization towards various scheduled payments that a user may have in their life.
+I have kept my midterm project the same, with the addition of these new features.
 
 ## How to Demo
 
@@ -43,19 +38,47 @@ pip install -r requirements.txt
 
 Now your virtual environment is ready to demo the project!
 
-### 3. Launch the app
+### 3. Install React and its Dependencies
 
-To launch the app, input this command into the terminal:
+Next, you'll need to install React and its dependencies.
 
-```powershell
-(venv)$ uvicorn main:app --port 8000 --reload
+Create a separate Git Bash shell (or just zsh if on MacOS)
+
+```bash
+cd frontend
+npm install
 ```
 
-The terminal will then launch the app, and prompt you with this text:
-![image](https://github.com/user-attachments/assets/6740c212-5f7d-4c73-94c8-ec5fbfdfea64)
-Hold down control (command on MacOS), and click on **http://127.0.0.1:8000**, this will open up the app in your preferred browser.
+**NOTE:** You only need to do "npm install" on your first demo
 
-Now you're done! The app is ready to be used.
+### 4. Launch the app
+
+Since I am using React, the frontend and backend will run on separate ports.
+
+For the backend, execute this from the **Project Root**:
+
+```powershell
+(venv)$ uvicorn backend.main:app --port 8000 --reload
+```
+
+It is **ESSENTIAL** that it is run in the root, and that it is backend.main:app, instead of main:app, otherwise my FastAPI server will not start due to the imports in the backend.
+
+The terminal will then launch the app, and prompt you with this text:
+![alt text](images/image.png)
+Hold down control (command on MacOS), and click on **http://127.0.0.1:8000**, this will open up the app in your preferred browser. It will open a blank screen, this is totally normal, I would suggest just going to http://127.0.0.1:8000/docs to the Swagger documentation, but its entirely up to you.
+
+For the frontend, go into the git bash (or zsh) terminal from before.
+
+Make sure you are in the frontend folder, and input this
+
+```bash
+cd frontend
+npm run dev
+```
+
+The terminal will launch the frontend, and prompt you with this text:
+![alt text](images/image-1.png)
+Once again, hold down control (command on MacOS), and click **http://localhost:5173/**. This will open up the frontend of the application, and you are ready to demo!
 
 ## How To Use The App
 
@@ -83,11 +106,15 @@ In this example, I changed the due date. Notice the OVERDUE text next to the due
 
 To delete a payment, click the ![image](https://github.com/user-attachments/assets/6c5eaf95-9ca2-4ab7-9ee2-968173494f46) icon at the bottom of the payment. The user will be prompted to confirm the deletion, and once confirmed, the payment will be removed from the list.
 
+### Login and Registration
+
+The login and registration is pretty self explanatory. If you are a new user, create an account, if not, login to your existing account. The only payments that will show up will be that of whoever is logged in.
+
 ## Code
 
 ### Frontend
 
-The frontend of this project was built with vanilla Javascript, HTML, and CSS. All of which is loosely based off of Professor Xu's sample code, with necessary modifications to the methods and structure to account for the fields of each Payment. As advised in class, Bootstrap was used for the styling, along with some of my own modifications to give the app a cleaner design. I used XHR style API calls as shown in class, as well as a few added methods for clearing all Payments, and toggling the status of the "paid" field in a Payment.
+The frotend of this project was built with React. The payment page itself is loosely based off of Proffesor Xu's todo app, with some modifications to tge methods and structure for each payment. Some of the styling was used from Bootstrap, and some of it vanilla. In the midterm, I used XHR api calls, but I switched to fetch because I feel I have a better understanding for it now.
 
 ### Backend
 
